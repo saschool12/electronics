@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Electronics Devices 1 — Finals Quiz (100)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --muted:#9aa4b2;
+    --accent:#3b82f6;
+    --accent-2:#6ee7b7;
+    --white:#e6eef8;
+    --correct:#16a34a;
+    --wrong:#ef4444;
+    --glass: rgba(255,255,255,0.04);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background: linear-gradient(180deg, #071028 0%, #081426 100%);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:24px;
+  }
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+  }
+  header{
+    display:flex;
+    gap:16px;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+  }
+  header .title{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .logo{
+    width:56px; height:56px; border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),#60a5fa);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; color:white; font-size:18px;
+    box-shadow: 0 6px 18px rgba(59,130,246,0.15);
+  }
+  h1{ margin:0; font-size:20px; letter-spacing:-0.2px; }
+  p.lead{ margin:0; color:var(--muted); font-size:13px; }
+
+  main{ display:grid; grid-template-columns: 1fr 320px; gap:20px; align-items:start; }
+
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: var(--radius);
+    padding:18px;
+    box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  /* questions list */
+  .questions { max-height: calc(100vh - 160px); overflow:auto; padding-right:8px; }
+  .q{
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .q h3{ margin:0 0 8px 0; font-size:15px; font-weight:600; color:var(--white); }
+  .opts{ display:flex; flex-direction:column; gap:8px; }
+  .opt{
+    display:flex; align-items:center; gap:12px;
+    background:var(--glass); padding:10px 12px; border-radius:10px;
+    cursor:pointer; transition: all .12s ease;
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+  .opt:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(2,6,23,0.6); }
+  .opt input{ width:18px; height:18px; accent-color:var(--accent); }
+  .opt .label{ font-size:14px; color:var(--white); }
+
+  /* right column */
+  .side{
+    position:sticky; top:24px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .score{
+    display:flex; gap:12px; align-items:center; justify-content:space-between;
+  }
+  .bigscore{
+    font-size:28px; font-weight:700; color:var(--accent);
+  }
+  .btn{
+    background:linear-gradient(90deg,var(--accent),#60a5fa);
+    color:white; border:none; padding:12px 14px; border-radius:12px; font-weight:600;
+    cursor:pointer; width:100%;
+    box-shadow:0 10px 30px rgba(59,130,246,0.14);
+  }
+  .btn.secondary{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--white);
+    font-weight:600;
+  }
+  .meta{ color:var(--muted); font-size:13px; }
+
+  /* after submit styles */
+  .correct { border:1px solid rgba(22,163,74,0.12); background: linear-gradient(180deg, rgba(16,185,129,0.06), rgba(16,185,129,0.02)); }
+  .wrong { border:1px solid rgba(239,68,68,0.12); background: linear-gradient(180deg, rgba(239,68,68,0.04), rgba(239,68,68,0.01)); }
+
+  .answerBadge{
+    display:inline-block; padding:5px 8px; border-radius:8px; font-weight:700; font-size:12px;
+    margin-left:8px; color:white;
+  }
+  .answerBadge.ok{ background:var(--correct); }
+  .answerBadge.bad{ background:var(--wrong); }
+
+  .stats { background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02); }
+  .small{ font-size:13px; color:var(--muted); }
+
+  footer { margin-top:22px; text-align:center; color:var(--muted); font-size:13px; }
+  @media (max-width:960px){
+    main{ grid-template-columns: 1fr; }
+    .side{ position:static; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title">
+      <div class="logo">ED1</div>
+      <div>
+        <h1>Electronics Devices 1 — Finals (100 Qs)</h1>
+        <p class="lead">Answer all 100 questions then click <strong>Submit Answers</strong> to auto-check.</p>
+      </div>
+    </div>
+    <div class="meta">Mode: <strong>Modern — Single page</strong></div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="questions" id="questionsContainer">
+        <!-- Questions injected by JS -->
+      </div>
+      <footer class="small">Tip: Use <strong>Ctrl+F</strong> to search a question number quickly.</footer>
+    </section>
+
+    <aside class="side">
+      <div class="card stats">
+        <div class="score">
+          <div>
+            <div class="small">Answered</div>
+            <div id="answeredCount" class="bigscore">0 / 100</div>
+          </div>
+          <div style="width:110px">
+            <button class="btn" id="submitBtn">Submit Answers</button>
+            <button class="btn secondary" id="resetBtn" style="margin-top:10px;">Reset</button>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="small">Your Score</div>
+          <div id="finalScore" style="font-size:22px;font-weight:700;color:var(--accent);">— / 100</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="small">Legend</div>
+        <p class="small" style="margin-top:8px;">
+          <span style="display:inline-block;width:12px;height:12px;background:var(--correct);border-radius:3px;margin-right:8px"></span> Correct
+          <span style="display:inline-block;width:12px;height:12px;background:var(--wrong);border-radius:3px;margin-left:18px;margin-right:8px"></span> Wrong
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="small">Controls</div>
+        <p class="small" style="margin-top:8px;">
+          • Answer all questions then press <strong>Submit Answers</strong>.<br>
+          • After submission each question will be highlighted green (correct) or red (wrong).<br>
+          • Use <strong>Reset</strong> to clear answers and start again.
+        </p>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<script>
+/* ======= QUESTIONS DATA =======
+   Each entry: { q: 'Question text', opts: ['A) ...','B) ...', ...], correct: 'A' }
+   Correct answers mapped from the quiz provided.
+*/
+const quizData = [
+{q:"1. What is the primary function of a multimeter?", opts:["A) Measure the surface temperature","B) Measure resistance, voltage, and current","C) Measure weight of an object","D) Measure power consumption of electricity"], correct:"B"},
+{q:"2. What type of voltage does a multimeter measure in household?", opts:["A) Alternating Current (ACV)","B) Direct Current (DCV)","C) Both AC and DC","D) Only DC"], correct:"A"},
+{q:"3. What is the unit of measurement for current?", opts:["A) Volt","B) Ampere","C) Ohm","D) Watt"], correct:"B"},
+{q:"4. Which of the following is a typical use of a multimeter?", opts:["A) To check the voltage in a circuit","B) To measure the power wattage on a circuit","C) To measure the temperature in a circuit","D) To measure the brightness of light"], correct:"A"},
+{q:"5. Which mode on a multimeter is used to measure the car battery?", opts:["A) Continuity mode","B) DC Voltage mode","C) Current mode","D) AC Voltage mode"], correct:"B"},
+{q:"6. What does a \"beep\" sound in continuity mode of a multimeter indicate?", opts:["A) High resistance","B) Short circuit (low resistance)","C) High voltage","D) It’s just normal sound"], correct:"B"},
+{q:"7. If the needle swings fully to zero and stays there, the capacitor is:", opts:["A) Open","B) Shorted","C) Good","D) Leaky"], correct:"B"},
+{q:"8. In testing a non-polarized capacitor, the probes can be connected:", opts:["A) Only one way","B) In either direction","C) Only in reverse","D) Not possible"], correct:"B"},
+{q:"9. When measuring current with a multimeter, the multimeter must be connected in:", opts:["A) Parallel with the component","B) In series with the component","C) Across the power supply","D) Across the capacitor"], correct:"B"},
+{q:"10. The value of an open resistor outside in a circuit shows?", opts:["A) 0 ohms","B) 50 ohms","C) 2 M ohms","D) infinity resistance"], correct:"D"},
+{q:"11. What is the basic function of a diode test mode on a multimeter?", opts:["A) To measure resistance","B) To test if the diode is healthy","C) To measure voltage","D) To check the continuity of diode"], correct:"B"},
+{q:"12. What happens when a multimeter is set to measure current in parallel with a power source?", opts:["A) The circuit will function normally","B) Chances the multimeter fuse will blow-up","C) The multimeter will show a low voltage reading","D) The multimeter will show infinite resistance"], correct:"B"},
+{q:"13. What type of capacitor has polarity?", opts:["A) Ceramic","B) Film","C) Electrolytic","D) Mica"], correct:"C"},
+{q:"14. A 10 µF capacitor reads 9.8 µF on a DMM. The capacitor is:", opts:["A) Faulty capacitor","B) Shorted capacitor","C) Good capacitor and within tolerance","D) Open"], correct:"C"},
+{q:"15. Which of the following can damage the multimeter?", opts:["A) Selector in resistance mode and in a powered circuit","B) Using it to measure voltage in a high-resistance circuit","C) Using it to measure current in an open circuit","D) Using in a diode test mode"], correct:"A"},
+{q:"16. The capacitance value printed as 100000 pF means:", opts:["A) 100 millifarads","B) 100 microfarads","C) 100 nano-farads","D) 100 farads"], correct:"C"},
+{q:"17. The charging time of a capacitor depends on:", opts:["A) Capacitance and resistance","B) Only voltage","C) Only temperature","D) Frequency only"], correct:"A"},
+{q:"18. A digital multimeter showing OL during testing a capacitance means:", opts:["A) Capacitor is good","B) Capacitor is open or beyond range","C) Capacitor is shorted","D) Capacitor is fully charged"], correct:"B"},
+{q:"19. In a polarized capacitor, which terminal is positive?", opts:["A) Longer lead","B) Shorter lead","C) Marked with a minus (–) sign","D) Both leads"], correct:"A"},
+{q:"20. Which of the following is an advantage of digital multimeters over multi-tester?", opts:["A) Faster response time","B) More accurate readings","C) Easier to read the display","D) More durable"], correct:"C"},
+{q:"21. Using multi-tester in testing a capacitor If the needle pointer swings fully to zero and stays there.", opts:["A) Shorted capacitor","B) Good capacitor","C) Open capacitor","D) Reversed polarity"], correct:"A"},
+{q:"22. Using multi-tester If the needle does not move at all when testing a capacitor, it indicates:", opts:["A) Shorted capacitor","B) Good capacitor","C) Open capacitor","D) Reversed polarity"], correct:"C"},
+{q:"23. A good capacitor when tested in capacitance mode should show:", opts:["A) Infinite value","B) Value close to its rated capacitance","C) No reading","D) Constant zero"], correct:"B"},
+{q:"24. What is the difference between a digital multimeter and an analog multimeter?", opts:["A) Digital multimeters are more durable","B) Digital multimeters shows numerical readings & analog multimeters use a needle pointer","C) Analog multimeters are more accurate","D) Digital multimeters are more expensive"], correct:"B"},
+{q:"25. What is the \"auto-ranging\" feature in digital multimeters used for?", opts:["A) To automatically adjust the resistance range","B) To automatically select the correct measurement range","C) To adjust the backlight","D) To switch between AC and DC modes"], correct:"B"},
+{q:"26. Before testing a capacitor, what should be done first?", opts:["A) Charge it fully with a battery charger","B) Discharge it completely by shorting the terminals","C) Connect it to power AC source","D) De-couple the terminals of capacitor"], correct:"B"},
+{q:"27. Which unit is used to measure inductor?", opts:["A) Ohm (Ω)","B) Henry (H)","C) Farad (F)","D) Volt (V)"], correct:"B"},
+{q:"28. Which unit is used to measure capacitance?", opts:["A) Ohm (Ω)","B) Henry (H)","C) Farad (F)","D) Volt (V)"], correct:"C"},
+{q:"29. What does \"auto-off\" in multimeter settings refer to?", opts:["A) The multimeter turns off after a set period of inactivity","B) The multimeter turns off after a set voltage is reached","C) The multimeter will automatically select the range","D) The multimeter will automatically test the battery life"], correct:"A"},
+{q:"30. Which of the following is true about measuring current using a multimeter?", opts:["A) The multimeter must be connected across the load","B) The multimeter must be connected in parallel with the power supply","C) The multimeter must be connected in series with the circuit","D) The multimeter should only be used in voltage mode"], correct:"C"},
+{q:"31. Why is it not reliable to test diodes in-circuit?", opts:["A) It may affect other components during testing","B) It requires high current before testing","C) It damages the diode during testing","D) It gives zero reading always when testing"], correct:"A"},
+{q:"32. Which selector function on a multimeter is used to check in continuity check?", opts:["A) Resistance setting","B) Voltage setting","C) Continuity setting","D) Diode test setting"], correct:"C"},
+{q:"33. What should you do before measuring current with a multimeter?", opts:["A) Set the multimeter to voltage mode","B) Ensure that the multimeter is connected in series with the load","C) Turn off the power source","D) Set the multimeter to the lowest range"], correct:"C"},
+{q:"34. In reverse bias, a leaky diode shows:", opts:["A) Infinite resistance","B) Very high resistance","C) Some low resistance","D) No voltage drop"], correct:"C"},
+{q:"35. Testing the continuity of a wire using a multimeter, what would indicate if it is good.", opts:["A) Erratic reading","B) A high reading","C) A beep sound","D) An open circuit symbol or \"OL\" display"], correct:"C"},
+{q:"36. A reading of 0.00V in both directions means the diode is:", opts:["A) Shorted","B) Open","C) Good","D) Leaky"], correct:"A"},
+{q:"37. When testing a diode using an analog tester (multi-tester), you typically use which range?", opts:["A) RX1","B) RX10","C) RX100","D) RX1K"], correct:"A"},
+{q:"38. What does \"OL\" on a digital multimeter indicate during diode testing?", opts:["A) Overload or open circuit","B) Low resistance","C) Good diode","D) Short circuit"], correct:"A"},
+{q:"39. What happens if you reverse the probes in the diode test mode?", opts:["A) The reading increases","B) The diode conducts both ways","C) The meter shows OL or infinity","D) The diode burns out"], correct:"C"},
+{q:"40. What is the main purpose of a fuse in a multimeter?", opts:["A) To protect the multimeter from high voltage","B) To protect the multimeter from high current","C) To ensure the multimeter stays on","D) To enhance the measurement accuracy"], correct:"B"},
+{q:"41. If a diode shows zero resistance in both directions, it indicates the diode is:", opts:["A) Good","B) Shorted","C) Leaky","D) Open"], correct:"B"},
+{q:"42. If a diode shows open circuit ‘OL” in multimeter or infinity in both directions, it means the diode is:", opts:["A) Good diode","B) Shorted or damaged diode","C) Open or damaged diode","D) Leaky diode"], correct:"C"},
+{q:"43. How does a digital multimeter typically display a measurement?", opts:["A) With a needle pointer","B) As a numerical value","C) With a graph","D) With an analog scale"], correct:"B"},
+{q:"44. Which of the following best describes a \"zeroing\" feature in a multimeter?", opts:["A) Calibrating the meter to ensure accurate readings","B) Making the multimeter display zero when probes are shorted","C) Testing the continuity of a circuit","D) Checking the power supply voltage"], correct:"B"},
+{q:"45. Which of the following is essential for accurate voltage measurements using a multimeter?", opts:["A) The circuit must be powered off","B) The multimeter must be connected in series with the load","C) The multimeter must be connected in parallel across the component","D) The multimeter should be set to high resistance"], correct:"C"},
+{q:"46. When testing a diode in forward bias, the positive probe is connected to the:", opts:["A) Cathode","B) Anode","C) Both terminals","D) Ground"], correct:"B"},
+{q:"47. What does a \"blown\" fuse in a multimeter indicate?", opts:["A) The multimeter is measuring too low a current","B) The multimeter is measuring too high a voltage","C) The multimeter's current measuring capability has been overloaded","D) The multimeter's resistance function is malfunctioning"], correct:"C"},
+{q:"48. What is the main purpose of testing a diode using a multimeter?", opts:["A) To measure current","B) To determine forward and reverse bias condition","C) To check resistance of the circuit","D) To measure voltage, drop across resistor"], correct:"B"},
+{q:"49. In a digital multimeter, which mode is used to test a diode?", opts:["A) Ohmmeter mode","B) Continuity mode","C) Diode test mode","D) Capacitance mode"], correct:"C"},
+{q:"50. A diode allows current to flow in:", opts:["A) Both directions","B) Forward direction only","C) Reverse direction only","D) No direction"], correct:"B"},
+{q:"51. When testing a diode in multi-tester by resistance when it is forward biased, the resistance shows.", opts:["A) Very high resistance reading","B) Low resistance reading","C) Infinite resistance","D) Zero ohms"], correct:"B"},
+{q:"52. The diode which converts from AC to DC is called:", opts:["A) Amplifier","B) Rectifier","C) Coupler","D) Filter"], correct:"B"},
+{q:"53. A Zener diode is used for:", opts:["A) Amplification","B) Rectification","C) Voltage regulation","D) Switching"], correct:"C"},
+{q:"54. The diode used to convert light energy into electrical energy is called:", opts:["A) LED","B) Photodiode","C) Schottky diode","D) Varactor diode"], correct:"B"},
+{q:"55. The symbol of a diode has:", opts:["A) Two arrows pointing in","B) One arrow and one bar","C) Two bars","D) A circle with an arrow"], correct:"B"},
+{q:"56. The diode used to emit light when forward biased is called:", opts:["A) Zener diode","B) Photodiode","C) LED","D) Varactor diode"], correct:"C"},
+{q:"57. A diode that has very fast switching speed and low forward voltage drop:", opts:["A) Schottky diode","B) Zener diode","C) Tunnel diode","D) Varactor diode"], correct:"A"},
+{q:"58. Which type of capacitor is commonly used for power supply filtering?", opts:["A) Electrolytic capacitor","B) Ceramic capacitor","C) Mica capacitor","D) Variable capacitor"], correct:"A"},
+{q:"59. A ceramic capacitor is usually:", opts:["A) Polarized","B) Non-polarized","C) Electrolytic","D) Paper type"], correct:"B"},
+{q:"60. Which type of capacitor is known for high stability and low loss?", opts:["A) Paper capacitor","B) Mica capacitor","C) Electrolytic capacitor","D) Film capacitor"], correct:"B"},
+{q:"61. The dielectric material used in a paper capacitor is:", opts:["A) Mica","B) Oxide film","C) Paper soaked in oil","D) Porcelain"], correct:"C"},
+{q:"62. Tantalum capacitors are a type of:", opts:["A) Film capacitor","B) Electrolytic capacitor","C) Ceramic capacitor","D) Variable capacitor"], correct:"B"},
+{q:"63. A supercapacitor (ultracapacitor) is mainly used for:", opts:["A) Tuning circuits","B) Current amplification","C) Signal filtering","D) Energy storage"], correct:"D"},
+{q:"64. A trimmer capacitor is a type of:", opts:["A) Fixed capacitor","B) Variable capacitor","C) Paper capacitor","D) Film capacitor"], correct:"B"},
+{q:"65. Which of the following is not a fixed capacitor?", opts:["A) Mica capacitor","B) Paper capacitor","C) Trimmer capacitor","D) Ceramic capacitor"], correct:"C"},
+{q:"66. Tantalum capacitors are preferred over aluminum electrolytics because they:", opts:["A) Are cheaper","B) Have higher leakage","C) Are smaller and more stable","D) Have less capacitance"], correct:"C"},
+{q:"67. A ceramic disc capacitor is commonly used for:", opts:["A) Audio filtering","B) Decoupling and bypassing","C) Energy storage","D) Power correction"], correct:"B"},
+{q:"68. What does a digital multimeter reading of 0.00 in capacitance mode mean?", opts:["A) Open capacitor","B) Good capacitor","C) Shorted or very low capacitance","D) Overcharged capacitor"], correct:"C"},
+{q:"69. When testing a good capacitor with an analog multi-tester, what happens to the needle?", opts:["A) It moves to zero and stays there","B) It doesn’t move at all","C) It deflects then slowly returns to infinity","D) It fluctuates randomly"], correct:"C"},
+{q:"70. Mylar capacitors are also commonly called:", opts:["A) Ceramic capacitors","B) Electrolytic capacitors","C) Polyester film capacitors","D) Variable capacitors"], correct:"C"},
+{q:"71. Mylar capacitors are generally used for:", opts:["A) Power rectification","B) Filtering and coupling in circuits","C) High current switching","D) Frequency generation"], correct:"B"},
+{q:"72. A transistor is a device used mainly for:", opts:["A) Rectification","B) Amplification and switching","C) Resistance control","D) Capacitance variation"], correct:"B"},
+{q:"73. The three terminals of a transistor are:", opts:["A) Anode, Cathode, Gate","B) Source, Drain, Gate","C) Emitter, Base, Collector","D) Input, Output, Control"], correct:"C"},
+{q:"74. The most common types of transistors are:", opts:["A) NPN and PNP","B) NPN and NNN","C) PNP and PPP","D) NPN and N-channel"], correct:"A"},
+{q:"75. The base-emitter junction of a good NPN transistor acts like a:", opts:["A) Reverse-biased diode","B) Forward-biased diode","C) Open circuit","D) Short circuit"], correct:"B"},
+{q:"76. The base-collector junction of a good NPN transistor acts like a:", opts:["A) Forward-biased diode","B) Reverse-biased diode","C) Short circuit","D) Open circuit"], correct:"B"},
+{q:"77. In testing with an analog multi-tester, a good transistor shows:", opts:["A) Equal resistance in all directions","B) One junction conducting, one blocking","C) Zero resistance everywhere","D) Infinite resistance everywhere"], correct:"B"},
+{q:"78. The symbol of a transistor with the arrow pointing toward the base represents:", opts:["A) NPN transistor","B) PNP transistor","C) Zener diode","D) Phototransistor"], correct:"B"},
+{q:"79. The semiconductor materials used in making transistors is usually:", opts:["A) Copper and Aluminum","B) Silicon or Germanium","C) Aluminum and Stainless steel","D) Carbon and Lead"], correct:"B"},
+{q:"80. A thyristor is also known as a:", opts:["A) Diode","B) Triode","C) Silicon Controlled Rectifier (SCR)","D) Bipolar Junction Transistor"], correct:"C"},
+{q:"81. A thyristor has how many layers of semiconductor material?", opts:["A) Two","B) Three","C) Four","D) Five"], correct:"C"},
+{q:"82. A thyristor has how many terminals?", opts:["A) 2","B) 3","C) 4","D) 5"], correct:"B"},
+{q:"83. The three terminals of a thyristor are:", opts:["A) Source, Drain, Gate","B) Anode, Cathode, Gate","C) Base, Collector, Emitter","D) Input, Output, Control"], correct:"B"},
+{q:"84. The device that is similar to a thyristor but can conduct in both directions is a:", opts:["A) Diode","B) Triac","C) Diac","D) MOSFET"], correct:"B"},
+{q:"85. The term SCR stands for:", opts:["A) Silicon Capacitive Rectifier","B) Silicon Controlled Rectifier","C) Semi Conductive Regulator","D) Static Current Regulator"], correct:"B"},
+{q:"86. The gate terminal of a thyristor is used to:", opts:["A) Supply power","B) Trigger or turn ON the device","C) Control voltage output","D) Provide cooling"], correct:"B"},
+{q:"87. A thyristor behaves like a:", opts:["A) Switch","B) Resistor","C) Transformer","D) Capacitor"], correct:"A"},
+{q:"88. When a thyristor is in the OFF state, it acts as a:", opts:["A) Short circuit","B) Open circuit","C) Variable resistor","D) Inductor"], correct:"B"},
+{q:"89. A diac is used to:", opts:["A) Protect the thyristor","B) Trigger a triac","C) Act as a filter","D) Rectify AC"], correct:"B"},
+{q:"90. A triac can conduct current:", opts:["A) In one direction only","B) In both directions","C) Only when reverse-biased","D) Only when gate is open"], correct:"B"},
+{q:"91. The main advantage of a thyristor is:", opts:["A) High frequency operation","B) Ability to control large AC or DC power","C) Small size","D) Low efficiency"], correct:"B"},
+{q:"92. A unijunction transistor (UJT) is often used to:", opts:["A) Switch large currents directly","B) Trigger SCRs","C) Act as a rectifier","D) Replace diodes"], correct:"B"},
+{q:"93. The thyristor remains ON until:", opts:["A) Gate signal is removed","B) Forward current falls below holding current","C) Reverse current increases","D) Temperature stabilizes"], correct:"B"},
+{q:"94. The symbol of a thyristor is similar to that of a:", opts:["A) Diode with a gate terminal","B) Transistor","C) Capacitor","D) LED"], correct:"A"},
+{q:"95. The main difference between an SCR and a diode is:", opts:["A) SCR has three terminals, diode has two","B) SCR is unidirectional, diode is bidirectional","C) SCR conducts without bias","D) SCR cannot block current"], correct:"A"},
+{q:"96. When testing a thyristor with a multimeter, the anode-cathode junction acts like a:", opts:["A) Zener diode","B) Forward-biased diode","C) Reverse-biased diode","D) Normal diode when triggered"], correct:"B"},
+{q:"97. Thyristors are commonly used in:", opts:["A) Audio amplifiers","B) Power control circuits (e.g., dimmers, motor speed control)","C) Oscillators","D) Communication circuits"], correct:"B"},
+{q:"98. A GTO (Gate Turn-Off Thyristor) can be:", opts:["A) Turned ON only by gate","B) Turned ON and OFF by gate signal","C) Turned OFF only by external circuit","D) Not triggered at all"], correct:"B"},
+{q:"99. A LASCR is a type of SCR that can be triggered by:", opts:["A) Temperature","B) Sound","C) Light","D) Voltage only"], correct:"C"},
+{q:"100. The light used to trigger a LASCR is usually:", opts:["A) Infrared","B) Visible or infrared light","C) Ultraviolet only","D) Laser light only"], correct:"B"}
+];
+
+/* ======= RENDER QUESTIONS ======= */
+const container = document.getElementById('questionsContainer');
+
+quizData.forEach((item, idx) => {
+  const qnum = idx + 1;
+  const qdiv = document.createElement('div');
+  qdiv.className = 'q';
+  qdiv.id = `q${qnum}`;
+  let html = `<h3>${item.q}</h3><div class="opts">`;
+  item.opts.forEach(optText => {
+    const letter = optText.trim().charAt(0); // 'A' 'B' etc
+    const id = `q${qnum}_${letter}`;
+    html += `
+      <label class="opt" for="${id}">
+        <input type="radio" name="q${qnum}" id="${id}" value="${letter}">
+        <span class="label">${optText}</span>
+      </label>
+    `;
+  });
+  html += `</div>`;
+  qdiv.innerHTML = html;
+  container.appendChild(qdiv);
+});
+
+/* ======= INTERACTIONS ======= */
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const answeredCountEl = document.getElementById('answeredCount');
+const finalScoreEl = document.getElementById('finalScore');
+
+function updateAnsweredCount(){
+  let answered = 0;
+  for(let i=1;i<=quizData.length;i++){
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    if(sel) answered++;
+  }
+  answeredCountEl.textContent = `${answered} / ${quizData.length}`;
+}
+document.getElementById('questionsContainer').addEventListener('change', updateAnsweredCount);
+
+/* Submit - grade all */
+submitBtn.addEventListener('click', () => {
+  let score = 0;
+  for(let i=0;i<quizData.length;i++){
+    const qn = i+1;
+    const container = document.getElementById(`q${qn}`);
+    const selected = document.querySelector(`input[name="q${qn}"]:checked`);
+    const user = selected ? selected.value : null;
+    const correct = quizData[i].correct;
+    // clear any existing classes/badges
+    container.classList.remove('correct','wrong');
+    // remove previously appended badges if any
+    const oldBadge = container.querySelector('.answerBadge');
+    if(oldBadge) oldBadge.remove();
+
+    // highlight
+    if(user === correct){
+      score++;
+      container.classList.add('correct');
+      const badge = document.createElement('span');
+      badge.className = 'answerBadge ok';
+      badge.textContent = `Correct (${correct})`;
+      container.querySelector('h3').appendChild(badge);
+    } else {
+      container.classList.add('wrong');
+      const badge = document.createElement('span');
+      badge.className = 'answerBadge bad';
+      badge.textContent = `Correct: ${correct}`;
+      container.querySelector('h3').appendChild(badge);
+    }
+
+    // additionally highlight correct option text in green, wrong selection in red
+    // reset all option backgrounds
+    const opts = container.querySelectorAll('.opt');
+    opts.forEach(o=>{
+      o.style.border = '';
+      o.style.boxShadow = '';
+      o.style.background = '';
+      // mark correct option
+      const inp = o.querySelector('input');
+      if(inp && inp.value === correct){
+        o.style.outline = '2px solid rgba(16,185,129,0.12)';
+      } else {
+        o.style.outline = '';
+      }
+      if(inp && inp.value === user && user !== correct){
+        o.style.outline = '2px solid rgba(239,68,68,0.12)';
+      }
+    });
+  }
+
+  finalScoreEl.textContent = `${score} / ${quizData.length}`;
+  // scroll to top of results
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* Reset */
+resetBtn.addEventListener('click', () => {
+  if(!confirm('Reset all answers?')) return;
+  for(let i=1;i<=quizData.length;i++){
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if(selected) selected.checked = false;
+    const container = document.getElementById(`q${i}`);
+    container.classList.remove('correct','wrong');
+    const oldBadge = container.querySelector('.answerBadge');
+    if(oldBadge) oldBadge.remove();
+    const opts = container.querySelectorAll('.opt');
+    opts.forEach(o=>{
+      o.style.outline = '';
+    });
+  }
+  finalScoreEl.textContent = `— / ${quizData.length}`;
+  updateAnsweredCount();
+});
+
+/* initial count */
+updateAnsweredCount();
+
+</script>
+</body>
+</html>
